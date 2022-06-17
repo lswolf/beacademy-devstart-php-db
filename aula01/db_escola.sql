@@ -2,14 +2,24 @@ CREATE DATABASE db_escola;
 USE db_escola
 CREATE TABLE tb_professor (
     nome VARCHAR(100) NOT NULL,
-    cpf CHAR(11) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    cpf CHAR(11) UNIQUE NOT NULL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
 );
 CREATE TABLE tb_aluno(
     nome VARCHAR(100) NOT NULL,
-    cpf CHAR(11) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    matricula INTEGER NOT NULL
+    cpf CHAR(11) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    matricula INTEGER PRIMARY KEY AUTO_INCREMENT,
+);
+CREATE TABLE tb_curso(
+    nome VARCHAR(100) NOT NULL,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+);
+CREATE TABLE tb_disciplina(
+    nome VARCHAR(100) NOT NULL,    
+    id_curso INTEGER NOT NULL,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
 );
 
-INSERT INTO tb_professor (nome,cpf,email) VALUES ('alessandro','12312312312','alesandro@email.com');
+INSERT INTO tb_professor (nome,cpf,email) VALUES ('alessandro','123123123 12','alesandro@email.com');

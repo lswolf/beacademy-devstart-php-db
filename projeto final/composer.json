@@ -4,5 +4,8 @@
             "App\\" : "src/"
             
         }
+    },
+    "require": {
+        "dompdf/dompdf": "^1.2"
     }
 }

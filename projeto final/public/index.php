@@ -1,14 +1,29 @@
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 <?php 
 include dirname(__DIR__).'/vendor/autoload.php';
-use  App\Controller\IndexController;
-use  App\Controller\ProductController;
-use  App\Controller\CategoryController;
 use  App\Controller\ErrorController;
-$i = new IndexController();
-$p = new ProductController();
-$c = new CategoryController();
+include '../src/View/menu.php';
+$routes = include '../config/routes.php';
+if(!isset($routes[$url])){
+    (new ErrorController)->notFoundAction();
+    exit;
+}
+$controller= $routes[$url]['controller'];
+$method = $routes[$url]['method'];
+(new $controller)-> $method();
 
-$url = explode('?', $_SERVER['REQUEST_URI'])[0];
+
+// $connection = Connection::getConnection();
+// $query = 'SELECT * FROM tb_category';
+// $preparação = $connection->prepare($query);
+// $preparação->execute();
+// var_dump($preparação);
+// while ( $registro = $preparação->fetch()){
+//     var_dump($registro);
+// }
 /* echo $url;
 switch ($url) {
 case  '/':
@@ -38,27 +53,5 @@ case  '/category/edit':
 default:
   (new ErrorController)->notFoundAction();
 } */
-function createRoute(string $controller, string $method){
-    return [
-        'controller' => $controller,
-        'method' => $method
-    ];
-}
-$routes = [
-    '/' => createRoute(IndexController::class,'indexAction'),
-    '/login' => createRoute(IndexController::class,'loginAction'),
-    '/product'=> createRoute(ProductController::class,'listAction'),
-    '/product/add'=> createRoute(ProductController::class,'addAction'),
-    '/product/edit'=> createRoute(ProductController::class,'editAction'),
-    '/category' => createRoute(CategoryController::class,'listAction'),
-    '/category/add'=> createRoute(CategoryController::class,'addAction'),
-    '/category/edit'=> createRoute(CategoryController::class,'editAction'),
-];
-if(!isset($routes[$url])){
-    (new ErrorController)->notFoundAction();
-    exit;
-}
-$controller= $routes[$url]['controller'];
-$method = $routes[$url]['method'];
-(new $controller)-> $method();
+
 
